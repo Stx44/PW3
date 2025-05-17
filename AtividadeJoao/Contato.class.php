@@ -102,5 +102,64 @@ class Contato{
 
         return $dados;
     }
+
+    function deleteUser($id){
+        $sql = "DELETE FROM usuarios WHERE id = :i";
+        $sql = $this->pdo->prepare($sql);
+ 
+        $sql-> bindValue(":i", $id);
+        $sql-> execute();
+ 
+        if( $sql->rowCount() > 0){
+            return true;
+        }else{
+            return false;
+        }
+
+
+    
+    }
+
+    function getUser($id){
+         $sql = "SELECT * FROM usuarios WHERE id = :i";
+        $sql = $this->pdo->prepare($sql);
+ 
+        $sql-> bindValue(":i", $id);
+        $sql-> execute();
+ 
+        if( $sql->rowCount() > 0){
+            return $sql->fetch();
+        }else{
+            return false;
+        }
+    }
+
+    function getAllUser(){
+         $sql = "SELECT * FROM usuarios";
+        $sql = $this->pdo->prepare($sql);
+        $sql-> execute();
+ 
+        if( $sql->rowCount() > 0){
+            return $sql->fetch();
+        }else{
+            return false;
+        }
+    }
+
+    function editUser($nome, $email, $senha, $id){
+        
+        
+        $sql = "UPDATE usuarios SET nome = :n, email = :e, senha = :s WHERE id = :i";
+        $sql = $this->pdo->prepare($sql);
+        
+        $sql->bindValue(":n", $nome);
+        $sql->bindValue(":e", $email);
+        $sql->bindValue(":s", $senha);
+        $sql->bindValue(":i", $id);
+
+        return $sql->execute();
+
+    }
+
     
 }
